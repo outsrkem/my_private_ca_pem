@@ -1,0 +1,21 @@
+{
+    "CN": "harbor.hub.com",
+    "hosts": [
+        "127.0.0.1",
+        "10.10.10.26",
+        "harbor.hub.com"
+    ],
+    "key": {
+        "algo": "rsa",
+        "size": 2048
+    },
+    "names": [
+        {
+            "C": "CN",
+            "L": "ZJ",            
+            "ST": "HZ",
+            "O": "harbor",
+            "OU": ""
+        }
+    ]
+}

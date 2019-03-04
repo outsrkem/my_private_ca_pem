@@ -1,0 +1,17 @@
+{
+    "CN": "Private Root CA",
+    "key": {
+        "algo": "rsa",
+        "size": 2048
+    },
+    "ca": {
+        "expiry": "876000h"
+    },
+    "names": [
+        {
+            "C": "CN",
+            "O": "Private issued",
+            "OU": "Root CA"
+        }
+    ]
+}
