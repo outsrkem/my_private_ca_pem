@@ -57,6 +57,7 @@ cat << EOF > www-csr.json
     "CN": "yonge.com",
     "hosts": [
         "127.0.0.1",
+        "localhost",
         "139.224.75.128",
         "10.10.10.1",
         "*.yonge.com"
@@ -95,6 +96,7 @@ cat << EOF > harbor-csr.json
     "CN": "harbor.hub.com",
     "hosts": [
         "127.0.0.1",
+        "localhost",
         "10.10.10.53",
         "harbor.hub.com"
     ],
