@@ -1,0 +1,16 @@
+authorityKeyIdentifier = keyid,issuer
+basicConstraints       = CA:FALSE
+keyUsage               = digitalSignature,nonRepudiation,keyEncipherment,dataEncipherment,keyAgreement,keyCertSign
+extendedKeyUsage       = serverAuth
+subjectAltName         = @alt_names
+crlDistributionPoints  = @crldp1_section
+
+[ crldp1_section ]
+fullname=URI:http://myhost.com/myca.crl
+
+[ alt_names ]
+DNS.1  = localhost
+DNS.2  = www.example.com
+DNS.2  = *.example.com
+IP.1   = 127.0.0.1
+IP.2   = 192.168.14.37
