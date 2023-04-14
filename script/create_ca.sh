@@ -55,6 +55,6 @@ EOF
 
 
 openssl genrsa -out ca.key
-openssl req -config openssl.conf -new -x509 -days 3650 -sha256 -key ca.key -out ca.crt -subj "/CN=ROOT CA"
+openssl req -config openssl.conf -new -x509 -days 3650 -sha256 -key ca.key -out ca.crt -subj "/CN=Root CA"
 
 openssl x509 -in ca.crt -noout -text
