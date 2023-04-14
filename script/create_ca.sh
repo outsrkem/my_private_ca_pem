@@ -20,9 +20,9 @@ name_opt          = ca_default
 cert_opt          = ca_default
 default_days      = 375
 preserve          = no
-policy            = policy_loose
+policy            = policy_match
 
-[ policy_loose ]
+[ policy_match ]
 countryName             = optional
 stateOrProvinceName     = optional
 localityName            = optional
@@ -36,7 +36,7 @@ default_bits        = 4096
 distinguished_name  = req_distinguished_name
 string_mask         = utf8only
 default_md          = sha256
-x509_extensions = v3_ca
+x509_extensions     = v3_ca
 
 [ req_distinguished_name ]
 countryName                    = Country Name (2 letter code)
@@ -47,15 +47,14 @@ organizationalUnitName         = Organizational Unit Name
 commonName                     = Common Name
 
 [ v3_ca ]
-basicConstraints = critical, CA:true, pathlen:2
-keyUsage =  critical, digitalSignature, cRLSign, keyCertSign
-subjectKeyIdentifier = hash
+basicConstraints       = critical, CA:true, pathlen:2
+keyUsage               = critical, digitalSignature, cRLSign, keyCertSign
+subjectKeyIdentifier   = hash
 authorityKeyIdentifier = keyid:always,issuer
 EOF
 
 
-
-openssl genrsa -out ca.key 2048
-openssl req -config openssl.conf -new -x509 -days 3650 -sha256 -key ca.key -out ca.crt -subj /CN=ca.pki
+openssl genrsa -out ca.key
+openssl req -config openssl.conf -new -x509 -days 3650 -sha256 -key ca.key -out ca.crt -subj "/CN=ROOT CA"
 
 openssl x509 -in ca.crt -noout -text
