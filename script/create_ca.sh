@@ -1,5 +1,6 @@
 #!/bin/bash
-cat << EOF > openssl.conf
+[ -d .openssl ] || mkdir .openssl || exit 1
+cat << EOF > .openssl/openssl.conf
 CERT_DIR   = .
 [ ca ]
 default_ca = CA_default
@@ -55,6 +56,5 @@ EOF
 
 
 openssl genrsa -out ca.key
-openssl req -config openssl.conf -new -x509 -days 3650 -sha256 -key ca.key -out ca.crt -subj "/CN=Root CA"
-
+openssl req -config .openssl/openssl.conf -new -x509 -days 3650 -sha256 -key ca.key -out ca.crt -subj "/CN=Root CA"
 openssl x509 -in ca.crt -noout -text

@@ -1,5 +1,5 @@
 #!/bin/bash
-cat << EOF > v3.ext
+cat << EOF > .openssl/v3.ext
 basicConstraints       = CA:FALSE
 keyUsage               = digitalSignature,nonRepudiation,keyEncipherment,dataEncipherment,keyAgreement,keyCertSign
 extendedKeyUsage       = serverAuth,clientAuth
@@ -25,6 +25,6 @@ IP.3   = 10.10.10.10
 EOF
 
 openssl req -out server.csr -newkey rsa:2048 -nodes -keyout server.key  -subj "/C=CN/CN=example.com"
-openssl x509 -req -sha512 -days 3650 -extfile v3.ext -CA ca.crt -CAkey ca.key -CAcreateserial -in server.csr -out server.crt
+openssl x509 -req -sha512 -days 3650 -extfile .openssl/v3.ext -CA ca.crt -CAkey ca.key -CAcreateserial -in server.csr -out server.crt
 openssl x509 -in server.crt -noout -text
 openssl verify -CAfile ca.crt server.crt
