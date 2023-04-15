@@ -11,20 +11,25 @@ EOF
 
 openssl req -out middle_ca.csr -newkey rsa:2048 -nodes -keyout middle_ca.key  -subj "/CN=Middle CA"
 # 也可以使用已有的ca签名
-openssl x509 -req -sha512 -days 3650 -extfile .openssl/middle_ca_v3.ext -CA ca.crt -CAkey ca.key -CAcreateserial -in middle_ca.csr -out middle_ca.crt
+openssl x509 -req -sha512 -days 3650 -extfile .openssl/middle_ca_v3.ext \
+	-CA ca.crt -CAkey ca.key -CAcreateserial -in middle_ca.csr -out middle_ca.crt
+
 openssl x509 -in middle_ca.crt -noout -text
 openssl verify -CAfile ca.crt middle_ca.crt
 
 
-# 服务器证书
+# 签发服务器证书
+# 可在 man x509v3_config 中查看更多配置
 cat << EOF > .openssl/v3.ext
 basicConstraints       = CA:FALSE
 keyUsage               = digitalSignature,nonRepudiation,keyEncipherment,dataEncipherment,keyAgreement,keyCertSign
 extendedKeyUsage       = serverAuth,clientAuth
-certificatePolicies    = @polsect
 subjectAltName         = @alt_names
+nsCertType             = server
+# certificatePolicies    = @polsect
 authorityKeyIdentifier = keyid,issuer
-crlDistributionPoints  = crldp1_section
+# crlDistributionPoints  = crldp1_section
+
 
 [ crldp1_section ]
 fullname = URI:http://myhost.com/myca.crlaa
@@ -44,7 +49,9 @@ IP.4   = 10.10.10.11
 EOF
 
 openssl req -out nginx.csr -newkey rsa:2048 -nodes -keyout nginx.key  -subj "/C=CN/CN=example.com"
-openssl x509 -req -sha512 -days 3650 -extfile .openssl/v3.ext -CA middle_ca.crt -CAkey middle_ca.key -CAcreateserial -in nginx.csr -out nginx.crt
+openssl x509 -req -sha512 -days 3650 -extfile .openssl/v3.ext -CA middle_ca.crt \
+	-CAkey middle_ca.key -CAcreateserial -in nginx.csr -out nginx.crt
+
 openssl x509 -in nginx.crt -noout -text
 
 #-------------------------------------------------------------------------

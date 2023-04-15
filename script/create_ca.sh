@@ -55,6 +55,6 @@ authorityKeyIdentifier = keyid:always,issuer
 EOF
 
 
-openssl genrsa -out ca.key
-openssl req -config .openssl/openssl.conf -new -x509 -days 3650 -sha256 -key ca.key -out ca.crt -subj "/CN=Root CA"
+openssl genrsa -out ca.key 2048
+openssl req -config .openssl/openssl.conf -new -x509 -days 3650 -sha512 -key ca.key -out ca.crt -subj "/CN=Root CA"
 openssl x509 -in ca.crt -noout -text
