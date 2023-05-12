@@ -28,6 +28,7 @@ subjectAltName         = @alt_names
 nsCertType             = server
 # certificatePolicies    = @polsect
 authorityKeyIdentifier = keyid,issuer
+subjectKeyIdentifier   = hash
 # crlDistributionPoints  = crldp1_section
 
 

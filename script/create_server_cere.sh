@@ -6,6 +6,7 @@ extendedKeyUsage       = serverAuth,clientAuth
 certificatePolicies    = @polsect
 subjectAltName         = @alt_names
 authorityKeyIdentifier = keyid,issuer
+subjectKeyIdentifier   = hash
 crlDistributionPoints  = crldp1_section
 
 [ crldp1_section ]
