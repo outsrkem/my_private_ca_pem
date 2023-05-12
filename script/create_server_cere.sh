@@ -1,13 +1,16 @@
 #!/bin/bash
-cat << EOF > .openssl/v3.ext
+# 签发服务器证书
+# 可在 man x509v3_config 中查看更多配置
+cat << EOF > v3.ext
+[ v3_ext ]
 basicConstraints       = CA:FALSE
 keyUsage               = digitalSignature,nonRepudiation,keyEncipherment,dataEncipherment,keyAgreement,keyCertSign
 extendedKeyUsage       = serverAuth,clientAuth
-certificatePolicies    = @polsect
+#certificatePolicies    = @polsect
 subjectAltName         = @alt_names
 authorityKeyIdentifier = keyid,issuer
 subjectKeyIdentifier   = hash
-crlDistributionPoints  = crldp1_section
+#crlDistributionPoints  = crldp1_section
 
 [ crldp1_section ]
 fullname = URI:http://myhost.com/myca.crlaa
@@ -26,6 +29,12 @@ IP.3   = 10.10.10.10
 EOF
 
 openssl req -out server.csr -newkey rsa:2048 -nodes -keyout server.key  -subj "/C=CN/CN=example.com"
-openssl x509 -req -sha512 -days 3650 -extfile .openssl/v3.ext -CA ca.crt -CAkey ca.key -CAcreateserial -in server.csr -out server.crt
-openssl x509 -in server.crt -noout -text
-openssl verify -CAfile ca.crt server.crt
+openssl x509 -req -sha512 -days 3650 -extensions v3_ext -extfile v3.ext -CA middle_ca.crt \
+    -CAkey middle_ca.key -CAcreateserial -in server.csr -out server.crt
+
+openssl x509 -noout -text -in server.crt
+
+#-------------------------------------------------------------------------
+# 创建服务器证书证书链，服务器证书在上面，中间证书在下面
+cat middle_ca.crt >> server.crt
+openssl verify -CAfile middle_ca.crt server.crt
