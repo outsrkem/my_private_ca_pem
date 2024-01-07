@@ -22,7 +22,7 @@ cfssl gencert -initca ca-csr.json | cfssljson -bare ca
 openssl x509  -noout -text -in ca.pem
 
 # 如果CA证书过期，则可以使用下面方法重新生成CA证书
-# 使用现有的CA私钥，重新生成： 
+# 使用现有的CA私钥，重新生成：
     cfssl gencert -initca -ca-key ca-key.pem ca-csr.json | cfssljson -bare ca
 # 使用现有的CA私钥和CA证书，重新生成：
     cfssl gencert -renewca -ca-key ca-key.pem -ca ca.pem  | cfssljson -bare ca
@@ -69,7 +69,7 @@ cat << EOF > www-csr.json
     "names": [
         {
             "C": "CN",
-            "L": "ZJ",            
+            "L": "ZJ",
             "ST": "HZ",
             "O": "yonge server",
             "OU": "IT"
@@ -107,7 +107,7 @@ cat << EOF > harbor-csr.json
     "names": [
         {
             "C": "CN",
-            "L": "ZJ",            
+            "L": "ZJ",
             "ST": "HZ",
             "O": "harbor",
             "OU": ""
